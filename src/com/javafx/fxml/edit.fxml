@@ -1,57 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8">
-    <left>
-        <VBox prefHeight="205.0" prefWidth="122.0" BorderPane.alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" text="SAVE">
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" text="CANCEL">
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
-        </VBox>
-    </left>
-    <center>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-            <children>
-                <TextField prefHeight="40.0" prefWidth="424.0" promptText="Name">
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="40.0" />
-                    </VBox.margin>
-                </TextField>
-                <TextField prefHeight="40.0" prefWidth="424.0" promptText="Phone">
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                    </VBox.margin>
-                </TextField>
-                <TextField prefHeight="40.0" prefWidth="424.0" promptText="E-mail">
-                    <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                    </VBox.margin>
-                </TextField>
-            </children>
-        </VBox>
-    </center>
-    <bottom>
-        <VBox prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.0" text="DELETE RECORD" textFill="#f20404">
-                    <VBox.margin>
-                        <Insets left="420.0" top="20.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
-        </VBox>
-    </bottom>
-</BorderPane>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="231.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="71.0" text="SAVE">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="40.0" />
+         </VBox.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="CANCEL">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+</VBox>
