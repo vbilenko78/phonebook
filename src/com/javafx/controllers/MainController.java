@@ -30,7 +30,7 @@ public class MainController extends VBox {
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
             stage.show();
 
         } catch (IOException e) {

@@ -1,5 +1,6 @@
 package com.javafx.main;
 
+import com.javafx.interfaces.impl.CollectionAddressBook;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,8 +19,14 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private static void testData() {
+        CollectionAddressBook addressBook = new CollectionAddressBook();
+        addressBook.fillTestData();
+        addressBook.print();
+    }
 
     public static void main(String[] args) {
         launch(args);
+        testData();
     }
 }
