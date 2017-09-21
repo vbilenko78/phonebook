@@ -2,12 +2,12 @@ package com.javafx.interfaces.impl;
 
 import com.javafx.interfaces.AddressBook;
 import com.javafx.objects.Person;
-
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class CollectionAddressBook implements AddressBook {
 
-    private ArrayList<Person> personList = new ArrayList();
+    private ObservableList<Person> personList = FXCollections.observableArrayList();
 
     @Override
     public void add(Person person) {
@@ -24,7 +24,7 @@ public class CollectionAddressBook implements AddressBook {
         //not implemented for collections
     }
 
-    public ArrayList<Person> getPersonList() {
+    public ObservableList<Person> getPersonList() {
         return personList;
     }
 
@@ -39,7 +39,7 @@ public class CollectionAddressBook implements AddressBook {
 
     public void fillTestData() {
         personList.add(new Person("John Reeves", "504-903-9878", "jreevs@nomail.comd"));
-        personList.add(new Person("John Reeves", "345-980-8888", "ssss@nomail.comd"));
+        personList.add(new Person("Bob Feofanov", "345-980-8888", "ssss@nomail.comd"));
         personList.add(new Person("John Smith", "123-444-7777", "newmail@nomail.comd"));
     }
 }
