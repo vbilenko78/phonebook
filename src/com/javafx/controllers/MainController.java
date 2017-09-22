@@ -70,6 +70,26 @@ public class MainController extends VBox {
 
     public void showDialog(ActionEvent actionEvent) {
 
+        Object source = actionEvent.getSource();
+
+        if (!(source instanceof Button)) {
+            return;
+        }
+
+        Button clickedButton = (Button) source;
+
+        Person selectedPerson = (Person) tblAddressBook.getSelectionModel().getSelectedItem();
+
+        switch (clickedButton.getId()) {
+            case "btnNewRecord":
+                System.out.println("add " + selectedPerson);
+                break;
+
+            case "btnEdit":
+                System.out.println("edit " + selectedPerson);
+                break;
+        }
+
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("../fxml/edit.fxml"));

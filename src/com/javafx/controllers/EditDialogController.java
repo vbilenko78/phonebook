@@ -29,11 +29,10 @@ public class EditDialogController {
 
 
     public void actionClose(ActionEvent actionEvent) {
-        Node source = (Node)  actionEvent.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
-
 
 
     public void setPerson(Person person) {
