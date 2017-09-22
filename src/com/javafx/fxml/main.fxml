@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -35,13 +32,13 @@
       </AnchorPane>
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="657.0">
          <children>
-            <Button fx:id="btnNewRecord" layoutX="531.0" layoutY="46.0" mnemonicParsing="false" onAction="#showDialog" text="New Record" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="33.0" />
+            <Button fx:id="btnNewRecord" layoutX="531.0" layoutY="46.0" mnemonicParsing="false" text="New Record" AnchorPane.bottomAnchor="38.0" AnchorPane.rightAnchor="33.0" />
             <Label fx:id="lblTotalRecs" alignment="CENTER" layoutX="264.0" layoutY="63.0" text="Total Records: 3" textFill="#c6b8b8" textOverrun="CLIP" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="264.0">
                <font>
                   <Font name="System Italic" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="btnEdit" layoutX="23.0" layoutY="31.0" mnemonicParsing="false" text="Edit Record" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="23.0" />
+            <Button fx:id="btnEdit" layoutX="23.0" layoutY="31.0" mnemonicParsing="false" onAction="#showDialog" text="Edit Record" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="23.0" />
          </children>
       </AnchorPane>
    </children>

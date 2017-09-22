@@ -40,6 +40,8 @@ public class CollectionAddressBook implements AddressBook {
     public void fillTestData() {
         personList.add(new Person("John Reeves", "504-903-9878", "jreevs@nomail.comd"));
         personList.add(new Person("Bob Feofanov", "345-980-8888", "ssss@nomail.comd"));
-        personList.add(new Person("John Smith", "123-444-7777", "newmail@nomail.comd"));
+        personList.add(new Person("John Smith", "123-444-5678", "newmail@nomail.comd"));
+        personList.add(new Person("Bob Johnson", "123-444-3432", "newyork@nomail.comd"));
+        personList.add(new Person("Ben Romanov", "123-444-4444", "np@nomail.comd"));
     }
 }

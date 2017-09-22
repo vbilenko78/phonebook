@@ -1,8 +1,8 @@
 package com.javafx.controllers;
 
-
 import com.javafx.interfaces.impl.CollectionAddressBook;
 import com.javafx.objects.Person;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class MainController extends VBox {
 
-    CollectionAddressBook addressBookImpl = new CollectionAddressBook();
+    private CollectionAddressBook addressBookImpl = new CollectionAddressBook();
 
     @FXML
     private Button newRecordBtn;
@@ -57,9 +57,10 @@ public class MainController extends VBox {
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+        addressBookImpl.getPersonList().addListener((ListChangeListener<Person>) c -> updateCountLabel());
+
         addressBookImpl.fillTestData();
         tblAddressBook.setItems(addressBookImpl.getPersonList());
-        updateCountLabel();
     }
 
     private void updateCountLabel() {
