@@ -4,25 +4,31 @@ import com.javafx.interfaces.impl.CollectionAddressBook;
 import com.javafx.objects.Person;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainController extends VBox {
+
+public class MainController {
 
     private CollectionAddressBook addressBookImpl = new CollectionAddressBook();
 
+    private Stage mainStage;
+
     @FXML
-    private Button newRecordBtn;
+    private Button btnNewRecord;
+
+    @FXML
+    private Button btnEdit;
 
     @FXML
     private TextField barSearch;
@@ -31,7 +37,7 @@ public class MainController extends VBox {
     private Button btnFind;
 
     @FXML
-    private TableView tblAddressBook;
+    private TableView tableAddressBook;
 
     @FXML
     private TableColumn<Person, String> colName;
@@ -43,69 +49,122 @@ public class MainController extends VBox {
     private TableColumn<Person, String> colEmail;
 
     @FXML
-    private Button btnEdit;
-
-    @FXML
-    private Button btnNewRecord;
-
-    @FXML
     private Label lblTotalRecs;
+
+
+    private Parent fxmlEdit;
+
+    private FXMLLoader fxmlLoader = new FXMLLoader();
+
+    private EditDialogController editDialogController;
+
+    private Stage editDialogStage;
+
+
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
 
     @FXML
     private void initialize() {
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<Person, String>("email"));
+        initListeners();
+        fillData();
+        initLoader();
+    }
 
-        addressBookImpl.getPersonList().addListener((ListChangeListener<Person>) c -> updateCountLabel());
-
+    private void fillData() {
         addressBookImpl.fillTestData();
-        tblAddressBook.setItems(addressBookImpl.getPersonList());
+        tableAddressBook.setItems(addressBookImpl.getPersonList());
+    }
+
+    private void initListeners() {
+        addressBookImpl.getPersonList().addListener(new ListChangeListener<Person>() {
+            @Override
+            public void onChanged(Change<? extends Person> c) {
+                updateCountLabel();
+            }
+        });
+
+
+        tableAddressBook.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
+                    showDialog();
+                }
+            }
+        });
+
+
+    }
+
+    private void initLoader() {
+        try {
+
+            fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
+            fxmlEdit = fxmlLoader.load();
+            editDialogController = fxmlLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateCountLabel() {
         lblTotalRecs.setText("Total Records: " + addressBookImpl.getPersonList().size());
     }
 
-
-    public void showDialog(ActionEvent actionEvent) {
+    public MainController actionButtonPressed(ActionEvent actionEvent) {
 
         Object source = actionEvent.getSource();
 
         if (!(source instanceof Button)) {
-            return;
+            return null;
         }
 
         Button clickedButton = (Button) source;
 
-        Person selectedPerson = (Person) tblAddressBook.getSelectionModel().getSelectedItem();
-
         switch (clickedButton.getId()) {
             case "btnNewRecord":
-                System.out.println("add " + selectedPerson);
+                editDialogController.setPerson(new Person());
+                showDialog();
+                addressBookImpl.add(editDialogController.getPerson());
                 break;
 
             case "btnEdit":
-                System.out.println("edit " + selectedPerson);
+                editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
+                showDialog();
+                break;
+
+            case "btnDeleteRec":
+                addressBookImpl.delete((Person)tableAddressBook.getSelectionModel().getSelectedItem());
                 break;
         }
 
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/edit.fxml"));
-            stage.setTitle("Edit Record");
-            stage.setMinWidth(300);
-            stage.setMinHeight(150);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-            stage.show();
+        return null;
+    }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    private void showDialog() {
+
+        if (editDialogStage == null) {
+            editDialogStage = new Stage();
+            editDialogStage.setTitle("Редактирование записи");
+            editDialogStage.setMinHeight(150);
+            editDialogStage.setMinWidth(300);
+            editDialogStage.setResizable(false);
+            editDialogStage.setScene(new Scene(fxmlEdit));
+            editDialogStage.initModality(Modality.WINDOW_MODAL);
+            editDialogStage.initOwner(mainStage);
         }
 
+        editDialogStage.showAndWait(); // для ожидания закрытия окна
+
     }
+
 
 }

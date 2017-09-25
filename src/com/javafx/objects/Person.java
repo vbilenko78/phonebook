@@ -8,13 +8,13 @@ public class Person {
     private SimpleStringProperty phone = new SimpleStringProperty("");
     private SimpleStringProperty email = new SimpleStringProperty("");
 
-    public Person() {
-    }
-
     public Person(String name, String phone, String email) {
         this.name = new SimpleStringProperty(name);
         this.phone = new SimpleStringProperty(phone);
         this.email = new SimpleStringProperty(email);
+    }
+
+    public Person() {
     }
 
     public String getName() {
@@ -40,6 +40,7 @@ public class Person {
     public void setEmail(String email) {
         this.email.set(email);
     }
+
 
     public SimpleStringProperty nameProperty() {
         return name;
