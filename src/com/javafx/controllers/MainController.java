@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,9 +17,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
-public class MainController {
+public class MainController implements Initializable {
 
     private CollectionAddressBook addressBookImpl = new CollectionAddressBook();
 
@@ -60,16 +64,20 @@ public class MainController {
 
     private Stage editDialogStage;
 
+    private ResourceBundle resourceBundle;
+
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
     }
 
-    @FXML
-    private void initialize() {
-        colName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
-        colPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<Person, String>("email"));
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resourceBundle = resources;
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         initListeners();
         fillData();
         initLoader();
@@ -106,6 +114,7 @@ public class MainController {
         try {
 
             fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
+            fxmlLoader.setResources(ResourceBundle.getBundle("com.javafx.bundles.Locale", new Locale("ru")));
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
 
@@ -115,7 +124,7 @@ public class MainController {
     }
 
     private void updateCountLabel() {
-        lblTotalRecs.setText("Total Records: " + addressBookImpl.getPersonList().size());
+        lblTotalRecs.setText(resourceBundle.getString("total_records_lbl") + ": " + addressBookImpl.getPersonList().size());
     }
 
     public MainController actionButtonPressed(ActionEvent actionEvent) {
@@ -141,7 +150,7 @@ public class MainController {
                 break;
 
             case "btnDeleteRec":
-                addressBookImpl.delete((Person)tableAddressBook.getSelectionModel().getSelectedItem());
+                addressBookImpl.delete((Person) tableAddressBook.getSelectionModel().getSelectedItem());
                 break;
         }
 
@@ -153,7 +162,7 @@ public class MainController {
 
         if (editDialogStage == null) {
             editDialogStage = new Stage();
-            editDialogStage.setTitle("Редактирование записи");
+            editDialogStage.setTitle(resourceBundle.getString("edit_rec_title"));
             editDialogStage.setMinHeight(150);
             editDialogStage.setMinWidth(300);
             editDialogStage.setResizable(false);
@@ -165,6 +174,5 @@ public class MainController {
         editDialogStage.showAndWait(); // для ожидания закрытия окна
 
     }
-
 
 }
