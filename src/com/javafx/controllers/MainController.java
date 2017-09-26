@@ -2,6 +2,7 @@ package com.javafx.controllers;
 
 import com.javafx.interfaces.impl.CollectionAddressBook;
 import com.javafx.objects.Person;
+import com.javafx.utils.DialogManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -20,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -96,7 +98,7 @@ public class MainController implements Initializable {
             Method m = TextFields.class.getDeclaredMethod("setupClearButtonField", TextField.class, ObjectProperty.class);
             m.setAccessible(true);
             m.invoke(null, customTextField, customTextField.rightProperty());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -147,13 +149,15 @@ public class MainController implements Initializable {
         lblTotalRecs.setText(resourceBundle.getString("total_records_lbl") + ": " + addressBookImpl.getPersonList().size());
     }
 
-    public MainController actionButtonPressed(ActionEvent actionEvent) {
+    public void  actionButtonPressed(ActionEvent actionEvent) {
 
         Object source = actionEvent.getSource();
 
         if (!(source instanceof Button)) {
-            return null;
+            return;
         }
+
+        Person selectedPerson = (Person) tableAddressBook.getSelectionModel().getSelectedItem();
 
         Button clickedButton = (Button) source;
 
@@ -165,16 +169,29 @@ public class MainController implements Initializable {
                 break;
 
             case "btnEdit":
+                if (!personIsSelected(selectedPerson)) {
+                    return;
+                }
                 editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
                 showDialog();
                 break;
 
             case "btnDeleteRec":
+                if (!personIsSelected(selectedPerson)) {
+                    return;
+                }
                 addressBookImpl.delete((Person) tableAddressBook.getSelectionModel().getSelectedItem());
                 break;
         }
 
-        return null;
+    }
+
+    private boolean personIsSelected(Person selectedPerson) {
+        if(selectedPerson == null){
+            DialogManager.showInfoDialog(resourceBundle.getString("error"), resourceBundle.getString("select_person"));
+            return false;
+        }
+        return true;
     }
 
 
