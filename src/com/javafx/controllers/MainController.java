@@ -114,7 +114,7 @@ public class MainController implements Initializable {
         try {
 
             fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
-            fxmlLoader.setResources(ResourceBundle.getBundle("com.javafx.bundles.Locale", new Locale("ru")));
+            fxmlLoader.setResources(ResourceBundle.getBundle("com.javafx.bundles.Locale", new Locale("en")));
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
 
