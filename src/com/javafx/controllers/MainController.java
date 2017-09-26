@@ -2,7 +2,10 @@ package com.javafx.controllers;
 
 import com.javafx.interfaces.impl.CollectionAddressBook;
 import com.javafx.objects.Person;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,8 +18,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -35,7 +40,7 @@ public class MainController implements Initializable {
     private Button btnEdit;
 
     @FXML
-    private TextField barSearch;
+    private CustomTextField barSearch;
 
     @FXML
     private Button btnFind;
@@ -66,6 +71,8 @@ public class MainController implements Initializable {
 
     private ResourceBundle resourceBundle;
 
+    private ObservableList<Person> backupList;
+
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -78,13 +85,26 @@ public class MainController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        setupClearButtonField(barSearch);
         initListeners();
         fillData();
         initLoader();
     }
 
+    private void setupClearButtonField(CustomTextField customTextField) {
+        try {
+            Method m = TextFields.class.getDeclaredMethod("setupClearButtonField", TextField.class, ObjectProperty.class);
+            m.setAccessible(true);
+            m.invoke(null, customTextField, customTextField.rightProperty());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void fillData() {
         addressBookImpl.fillTestData();
+        backupList = FXCollections.observableArrayList();
+        backupList.addAll(addressBookImpl.getPersonList());
         tableAddressBook.setItems(addressBookImpl.getPersonList());
     }
 
@@ -171,8 +191,22 @@ public class MainController implements Initializable {
             editDialogStage.initOwner(mainStage);
         }
 
-        editDialogStage.showAndWait(); // для ожидания закрытия окна
+        editDialogStage.showAndWait();
 
+    }
+
+    public void actionSearch(ActionEvent actionEvent) {
+        addressBookImpl.getPersonList().clear();
+
+        for (Person person : backupList) {
+            if (person.getName().toLowerCase().contains(barSearch.getText().toLowerCase()) ||
+                    person.getPhone().toLowerCase().contains(barSearch.getText().toLowerCase()) ||
+                    person.getEmail().toLowerCase().contains(barSearch.getText().toLowerCase())) {
+                addressBookImpl.getPersonList().add(person);
+
+            }
+
+        }
     }
 
 }

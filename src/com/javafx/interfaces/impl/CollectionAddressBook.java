@@ -38,10 +38,15 @@ public class CollectionAddressBook implements AddressBook {
     }
 
     public void fillTestData() {
-        personList.add(new Person("John Reeves", "504-903-9878", "jreevs@nomail.comd"));
-        personList.add(new Person("Bob Feofanov", "345-980-8888", "ssss@nomail.comd"));
-        personList.add(new Person("John Smith", "123-444-5678", "newmail@nomail.comd"));
-        personList.add(new Person("Bob Johnson", "123-444-3432", "newyork@nomail.comd"));
-        personList.add(new Person("Ben Romanov", "123-444-4444", "np@nomail.comd"));
+        personList.add(new Person("John Reeves", "504-903-9878", "jreevs@nomail.com"));
+        personList.add(new Person("Bob Feofanov", "345-980-8888", "ssss@nomail.com"));
+        personList.add(new Person("John Smith", "123-444-5678", "newmail@nomail.com"));
+        personList.add(new Person("Bob Johnson", "123-444-3432", "newyork@nomail.com"));
+        personList.add(new Person("Ivan Ivanov", "123-444-4444", "ivan@nomail.com"));
+        personList.add(new Person("Ben Hickopp", "123-444-4444", "ben@nomail.com"));
+        personList.add(new Person("Dan Hoffman", "123-444-4444", "dan@nomail.com"));
+        personList.add(new Person("Mike Gorbachev", "123-444-4444", "mike@nomail.com"));
+        personList.add(new Person("Ludmila Baranova", "123-444-4444", "ldml@nomail.com"));
+        personList.add(new Person("Mark Klimov", "123-444-4444", "marik@nomail.com"));
     }
 }

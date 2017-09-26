@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import org.controlsfx.control.textfield.*?>
 <?import java.lang.*?>
+<?import org.controlsfx.control.textfield.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controllers.MainController">
    <children>
       <AnchorPane>
          <children>
-            <Button fx:id="btnFind" layoutX="540.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="90.0" text="%find" AnchorPane.rightAnchor="25.0" />
+            <Button fx:id="btnFind" layoutX="540.0" layoutY="14.0" mnemonicParsing="false" onAction="#actionSearch" prefHeight="27.0" prefWidth="90.0" text="%find" AnchorPane.rightAnchor="25.0" />
             <CustomTextField fx:id="barSearch" layoutX="22.0" layoutY="15.0" prefHeight="19.0" prefWidth="500.0" promptText="%search_promt_txt" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="135.0" />
          </children>
       </AnchorPane>
