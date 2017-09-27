@@ -1,16 +1,14 @@
 package com.javafx.controllers;
 
-import com.javafx.interfaces.impl.CollectionAddressBook;
+import com.javafx.objects.Person;
+import com.javafx.utils.DialogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.javafx.objects.Person;
-import sun.applet.Main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,13 +34,9 @@ public class EditDialogController implements Initializable {
     @FXML
     private TextField txtEmail;
 
-    @FXML
-    private TableView tableAddressBook;
-
     private Person person;
-    private CollectionAddressBook addressBookImpl = new CollectionAddressBook();
-
     private ResourceBundle resourceBundle;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,20 +66,28 @@ public class EditDialogController implements Initializable {
 
 
     public void actionSave(ActionEvent actionEvent) {
-        btnSave.isDefaultButton();
+        if (!checkValues()) {
+            return;
+        }
         person.setName(txtName.getText());
         person.setPhone(txtPhone.getText());
         person.setEmail(txtEmail.getText());
-
         actionClose(actionEvent);
+    }
+
+    private boolean checkValues() {
+        if (txtName.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 || txtEmail.getText().trim().length() == 0) {
+            DialogManager.showInfoDialog(resourceBundle.getString("error"), resourceBundle.getString("fill_field"));
+            return false;
+        }
+
+        return true;
     }
 
     public void actionDelete(ActionEvent actionEvent) {
         person.setName("");
         person.setPhone("");
         person.setEmail("");
-
         actionClose(actionEvent);
     }
-
 }

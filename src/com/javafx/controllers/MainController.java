@@ -149,7 +149,7 @@ public class MainController implements Initializable {
         lblTotalRecs.setText(resourceBundle.getString("total_records_lbl") + ": " + addressBookImpl.getPersonList().size());
     }
 
-    public void  actionButtonPressed(ActionEvent actionEvent) {
+    public void actionButtonPressed(ActionEvent actionEvent) {
 
         Object source = actionEvent.getSource();
 
@@ -172,7 +172,7 @@ public class MainController implements Initializable {
                 if (!personIsSelected(selectedPerson)) {
                     return;
                 }
-                editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
+                editDialogController.setPerson(selectedPerson);
                 showDialog();
                 break;
 
@@ -180,11 +180,11 @@ public class MainController implements Initializable {
                 if (!personIsSelected(selectedPerson)) {
                     return;
                 }
-                addressBookImpl.delete((Person) tableAddressBook.getSelectionModel().getSelectedItem());
+                addressBookImpl.delete(selectedPerson);
                 break;
         }
-
     }
+
 
     private boolean personIsSelected(Person selectedPerson) {
         if(selectedPerson == null){
