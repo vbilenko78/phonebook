@@ -1,8 +1,10 @@
 package com.javafx.controllers;
 
 import com.javafx.interfaces.impl.CollectionAddressBook;
+import com.javafx.objects.Lang;
 import com.javafx.objects.Person;
 import com.javafx.utils.DialogManager;
+import com.javafx.utils.LocaleManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,10 +28,11 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 
-public class MainController implements Initializable {
+public class MainController extends Observable implements Initializable {
 
     private CollectionAddressBook addressBookImpl = new CollectionAddressBook();
 
@@ -62,19 +65,18 @@ public class MainController implements Initializable {
     @FXML
     private Label lblTotalRecs;
 
+    @FXML
+    private ComboBox comboLocales;
+
 
     private Parent fxmlEdit;
-
     private FXMLLoader fxmlLoader = new FXMLLoader();
-
     private EditDialogController editDialogController;
-
     private Stage editDialogStage;
-
     private ResourceBundle resourceBundle;
-
     private ObservableList<Person> backupList;
-
+    private static final String RU_CODE = "ru";
+    private static final String EN_CODE = "en";
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -108,6 +110,22 @@ public class MainController implements Initializable {
         backupList = FXCollections.observableArrayList();
         backupList.addAll(addressBookImpl.getPersonList());
         tableAddressBook.setItems(addressBookImpl.getPersonList());
+        fillLangComboBox();
+    }
+
+    private void fillLangComboBox() {
+        Lang langRU = new Lang(0, RU_CODE, resourceBundle.getString("ru"), LocaleManager.RU_LOCALE);
+        Lang langEN = new Lang(1, EN_CODE, resourceBundle.getString("en"), LocaleManager.EN_LOCALE);
+
+        comboLocales.getItems().add(langRU);
+        comboLocales.getItems().add(langEN);
+
+        if (LocaleManager.getCurrentLang() == null) {// по-умолчанию показывать выбранный русский язык (можно текущие настройки языка сохранять в файл)
+            LocaleManager.setCurrentLang(langRU);
+            comboLocales.getSelectionModel().select(0);
+        } else {
+            comboLocales.getSelectionModel().select(LocaleManager.getCurrentLang().getIndex());
+        }
     }
 
     private void initListeners() {
@@ -129,6 +147,18 @@ public class MainController implements Initializable {
             }
         });
 
+        // слушает изменение языка
+        comboLocales.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Lang selectedLang = (Lang) comboLocales.getSelectionModel().getSelectedItem();
+                LocaleManager.setCurrentLang(selectedLang);
+
+                // уведомить всех слушателей, что произошла смена языка
+                setChanged();
+                notifyObservers(selectedLang);
+            }
+        });
 
     }
 
@@ -187,7 +217,7 @@ public class MainController implements Initializable {
 
 
     private boolean personIsSelected(Person selectedPerson) {
-        if(selectedPerson == null){
+        if (selectedPerson == null) {
             DialogManager.showInfoDialog(resourceBundle.getString("error"), resourceBundle.getString("select_person"));
             return false;
         }
