@@ -1,6 +1,6 @@
 package com.javafx.controllers;
 
-import com.javafx.interfaces.impl.CollectionAddressBook;
+import com.javafx.interfaces.impl.DBAddressBook;
 import com.javafx.objects.Lang;
 import com.javafx.objects.Person;
 import com.javafx.utils.DialogManager;
@@ -34,7 +34,8 @@ import java.util.ResourceBundle;
 
 public class MainController extends Observable implements Initializable {
 
-    private CollectionAddressBook addressBookImpl = new CollectionAddressBook();
+    private static final String FXML_EDIT = "../fxml/edit.fxml";
+    private DBAddressBook addressBookImpl = new DBAddressBook();
 
     private Stage mainStage;
 
@@ -106,11 +107,13 @@ public class MainController extends Observable implements Initializable {
     }
 
     private void fillData() {
-        addressBookImpl.fillTestData();
-        backupList = FXCollections.observableArrayList();
-        backupList.addAll(addressBookImpl.getPersonList());
-        tableAddressBook.setItems(addressBookImpl.getPersonList());
+        fillTable();
         fillLangComboBox();
+        updateCountLabel();
+    }
+
+    private void fillTable() {
+        tableAddressBook.setItems(addressBookImpl.getPersonList());
     }
 
     private void fillLangComboBox() {

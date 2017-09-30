@@ -1,20 +1,40 @@
 package com.javafx.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
 
+    private SimpleIntegerProperty id = new SimpleIntegerProperty();
     private SimpleStringProperty name = new SimpleStringProperty("");
     private SimpleStringProperty phone = new SimpleStringProperty("");
     private SimpleStringProperty email = new SimpleStringProperty("");
 
+    public Person() {
+    }
     public Person(String name, String phone, String email) {
         this.name = new SimpleStringProperty(name);
         this.phone = new SimpleStringProperty(phone);
         this.email = new SimpleStringProperty(email);
     }
 
-    public Person() {
+    public Person(SimpleIntegerProperty id, SimpleStringProperty name, SimpleStringProperty phone, SimpleStringProperty email) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public String getName() {

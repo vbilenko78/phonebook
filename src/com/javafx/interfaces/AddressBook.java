@@ -1,12 +1,18 @@
 package com.javafx.interfaces;
 
 import com.javafx.objects.Person;
+import javafx.collections.ObservableList;
 
 public interface AddressBook {
 
-    void add(Person person);
+    boolean add(Person person);
 
-    void delete(Person person);
+    boolean update(Person person);
 
-    void update(Person person);
+    boolean delete(Person person);
+
+    ObservableList<Person> findAll();
+
+    ObservableList<Person> find(String text);
+
 }
