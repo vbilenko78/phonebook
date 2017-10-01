@@ -113,7 +113,8 @@ public class MainController extends Observable implements Initializable {
     }
 
     private void fillTable() {
-        tableAddressBook.setItems(addressBookImpl.getPersonList());
+        ObservableList<Person> list = addressBookImpl.findAll();
+        tableAddressBook.setItems(list);
     }
 
     private void fillLangComboBox() {
@@ -194,11 +195,17 @@ public class MainController extends Observable implements Initializable {
 
         Button clickedButton = (Button) source;
 
+        boolean research = false;
+
         switch (clickedButton.getId()) {
             case "btnNewRecord":
                 editDialogController.setPerson(new Person());
                 showDialog();
-                addressBookImpl.add(editDialogController.getPerson());
+
+                if (editDialogController.isSaveClicked()) {
+                    addressBookImpl.add(editDialogController.getPerson());
+                    research = true;
+                }
                 break;
 
             case "btnEdit":
@@ -207,15 +214,38 @@ public class MainController extends Observable implements Initializable {
                 }
                 editDialogController.setPerson(selectedPerson);
                 showDialog();
+
+                if (editDialogController.isSaveClicked()) {
+                    // коллекция в addressBookImpl и так обновляется, т.к. мы ее редактируем в диалоговом окне и сохраняем при нажатии на ОК
+                    addressBookImpl.update(selectedPerson);
+                    research = true;
+                }
                 break;
 
             case "btnDeleteRec":
-                if (!personIsSelected(selectedPerson)) {
+                if (!personIsSelected(selectedPerson) || !(confirmDelete())) {
                     return;
                 }
+
+                research = true;
                 addressBookImpl.delete(selectedPerson);
                 break;
         }
+
+
+        if (research) {
+            actionSearch(actionEvent);
+        }
+
+    }
+
+    private boolean confirmDelete() {
+        if (DialogManager.showConfirmDialog(resourceBundle.getString("confirm"), resourceBundle.getString("confirm_delete")).get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 

@@ -82,10 +82,11 @@ public class DBAddressBook implements AddressBook {
 
     @Override
     public boolean update(Person person) {
-        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("update person set fio=?, phone=? where id=?")) {
+        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("update person set name=?, phone=?, email=? where id=?")) {
             statement.setString(1, person.getName());
             statement.setString(2, person.getPhone());
-            statement.setInt(3, person.getId());
+            statement.setString(3, person.getEmail());
+            statement.setInt(4, person.getId());
 
             int result = statement.executeUpdate();
             if (result > 0) {
@@ -104,7 +105,7 @@ public class DBAddressBook implements AddressBook {
 
         personList.clear();
 
-        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("select * from person where fio like ? or phone like ?");) {
+        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("select * from person where name like ? or phone like ?");) {
 
             String searchStr = "%" + text + "%";
 

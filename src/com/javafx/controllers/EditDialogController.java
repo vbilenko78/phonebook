@@ -36,6 +36,7 @@ public class EditDialogController implements Initializable {
 
     private Person person;
     private ResourceBundle resourceBundle;
+    private boolean saveClicked = false;// для определения нажатой кнопки
 
 
     @Override
@@ -47,6 +48,7 @@ public class EditDialogController implements Initializable {
         if (person == null) {
             return;
         }
+        saveClicked = false;
         this.person = person;
         txtName.setText(person.getName());
         txtPhone.setText(person.getPhone());
@@ -89,5 +91,9 @@ public class EditDialogController implements Initializable {
         person.setPhone("");
         person.setEmail("");
         actionClose(actionEvent);
+    }
+
+    public boolean isSaveClicked() {
+        return saveClicked;
     }
 }
