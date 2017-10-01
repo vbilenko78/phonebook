@@ -1,12 +1,12 @@
 package com.javafx.controllers;
 
 import com.javafx.interfaces.impl.DBAddressBook;
+import com.javafx.main.Main;
 import com.javafx.objects.Lang;
 import com.javafx.objects.Person;
 import com.javafx.utils.DialogManager;
 import com.javafx.utils.LocaleManager;
 import javafx.beans.property.ObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,15 +27,15 @@ import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
 
 public class MainController extends Observable implements Initializable {
 
-    private static final String FXML_EDIT = "../fxml/edit.fxml";
     private DBAddressBook addressBookImpl = new DBAddressBook();
+    private static final String FXML_EDIT = "../fxml/edit.fxml";
+    private static final String BUNDLES_FOLDER = "com.javafx.bundles.Locale";
 
     private Stage mainStage;
 
@@ -168,9 +168,8 @@ public class MainController extends Observable implements Initializable {
 
     private void initLoader() {
         try {
-
-            fxmlLoader.setLocation(getClass().getResource("../fxml/edit.fxml"));
-            fxmlLoader.setResources(ResourceBundle.getBundle("com.javafx.bundles.Locale", new Locale("en")));
+            fxmlLoader.setLocation(getClass().getResource(FXML_EDIT));
+            fxmlLoader.setResources(ResourceBundle.getBundle(BUNDLES_FOLDER, LocaleManager.getCurrentLang().getLocale()));
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
 
@@ -217,8 +216,8 @@ public class MainController extends Observable implements Initializable {
 
                 if (editDialogController.isSaveClicked()) {
                     // коллекция в addressBookImpl и так обновляется, т.к. мы ее редактируем в диалоговом окне и сохраняем при нажатии на ОК
-                    addressBookImpl.update(selectedPerson);
                     research = true;
+                    addressBookImpl.update(selectedPerson);
                 }
                 break;
 
@@ -240,7 +239,7 @@ public class MainController extends Observable implements Initializable {
     }
 
     private boolean confirmDelete() {
-        if (DialogManager.showConfirmDialog(resourceBundle.getString("confirm"), resourceBundle.getString("confirm_delete")).get() == ButtonType.OK){
+        if (DialogManager.showConfirmDialog(resourceBundle.getString("confirm_delete"), resourceBundle.getString("confirm_delete")).get() == ButtonType.OK) {
             return true;
         } else {
             return false;
@@ -276,17 +275,13 @@ public class MainController extends Observable implements Initializable {
     }
 
     public void actionSearch(ActionEvent actionEvent) {
-        addressBookImpl.getPersonList().clear();
 
-        for (Person person : backupList) {
-            if (person.getName().toLowerCase().contains(barSearch.getText().toLowerCase()) ||
-                    person.getPhone().toLowerCase().contains(barSearch.getText().toLowerCase()) ||
-                    person.getEmail().toLowerCase().contains(barSearch.getText().toLowerCase())) {
-                addressBookImpl.getPersonList().add(person);
-
-            }
-
+        if (barSearch.getText().trim().length() == 0) {
+            addressBookImpl.findAll();
+        } else {
+            addressBookImpl.find(barSearch.getText());
         }
+
     }
 
 }

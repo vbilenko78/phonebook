@@ -105,20 +105,23 @@ public class DBAddressBook implements AddressBook {
 
         personList.clear();
 
-        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("select * from person where name like ? or phone like ?");) {
+        try (Connection con = SQLiteConnection.getConnection();
+             PreparedStatement statement = con.prepareStatement("select * from person where name like ? or phone like ? or email like ?")) {
 
             String searchStr = "%" + text + "%";
 
             statement.setString(1, searchStr);
             statement.setString(2, searchStr);
+            statement.setString(3, searchStr);
 
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
                 Person person = new Person();
                 person.setId(rs.getInt("id"));
-                person.setName(rs.getString("fio"));
+                person.setName(rs.getString("name"));
                 person.setPhone(rs.getString("phone"));
+                person.setEmail(rs.getString("email"));
                 personList.add(person);
             }
         } catch (SQLException ex) {
