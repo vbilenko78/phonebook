@@ -16,7 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class Main extends Application implements Observer{
+public class Main extends Application implements Observer {
 
 
     private static final String FXML_MAIN = "../fxml/main.fxml";
@@ -50,7 +50,6 @@ public class Main extends Application implements Observer{
     }
 
 
-
     // загружает дерево компонентов и возвращает в виде VBox (корневой элемент в FXML)
     private VBox loadFXML(Locale locale) {
         fxmlLoader = new FXMLLoader();
@@ -81,6 +80,11 @@ public class Main extends Application implements Observer{
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(670);
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        System.exit(0);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.javafx.controllers;
 
 import com.javafx.interfaces.impl.DBAddressBook;
-import com.javafx.main.Main;
 import com.javafx.objects.Lang;
 import com.javafx.objects.Person;
 import com.javafx.utils.DialogManager;
