@@ -74,7 +74,6 @@ public class MainController extends Observable implements Initializable {
     private EditDialogController editDialogController;
     private Stage editDialogStage;
     private ResourceBundle resourceBundle;
-    private ObservableList<Person> backupList;
     private static final String RU_CODE = "ru";
     private static final String EN_CODE = "en";
 
@@ -123,7 +122,7 @@ public class MainController extends Observable implements Initializable {
         comboLocales.getItems().add(langRU);
         comboLocales.getItems().add(langEN);
 
-        if (LocaleManager.getCurrentLang() == null) {// по-умолчанию показывать выбранный русский язык (можно текущие настройки языка сохранять в файл)
+        if (LocaleManager.getCurrentLang() == null) {
             LocaleManager.setCurrentLang(langRU);
             comboLocales.getSelectionModel().select(0);
         } else {

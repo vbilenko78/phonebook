@@ -1,12 +1,15 @@
 package com.javafx.controllers;
 
+import com.javafx.interfaces.impl.DBAddressBook;
 import com.javafx.objects.Person;
 import com.javafx.utils.DialogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,6 +18,12 @@ import java.util.ResourceBundle;
 
 
 public class EditDialogController implements Initializable {
+
+    private DBAddressBook addressBookImpl = new DBAddressBook();
+    private static final String FXML_MAIN = "../fxml/main.fxml";
+
+    @FXML
+    private TableView tableAddressBook;
 
     @FXML
     private Button btnDeleteRec;
@@ -36,7 +45,8 @@ public class EditDialogController implements Initializable {
 
     private Person person;
     private ResourceBundle resourceBundle;
-    private boolean saveClicked = false;// для определения нажатой кнопки
+    private boolean saveClicked = false;
+    private FXMLLoader fxmlLoader = new FXMLLoader();
 
 
     void setPerson(Person person) {
@@ -81,19 +91,20 @@ public class EditDialogController implements Initializable {
         return true;
     }
 
-    public void actionDelete(ActionEvent actionEvent) {
-        person.setName("");
-        person.setPhone("");
-        person.setEmail("");
-        actionClose(actionEvent);
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resourceBundle = resources;
+        fxmlLoader.setLocation(getClass().getResource(FXML_MAIN));
     }
 
     public boolean isSaveClicked() {
         return saveClicked;
     }
+
+    //delete record from the modal window
+    public void actionButtonPressedModal(ActionEvent actionEvent) {
+        actionClose(actionEvent);
+
+    }
 }
+

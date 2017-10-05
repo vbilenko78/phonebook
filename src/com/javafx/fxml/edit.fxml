@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.net.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controllers.EditDialogController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controllers.EditDialogController">
     <left>
         <VBox prefHeight="205.0" prefWidth="122.0" BorderPane.alignment="CENTER">
             <children>
@@ -52,7 +52,7 @@
     <bottom>
         <VBox prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnDeleteRec" mnemonicParsing="false" onAction="#actionDelete" prefHeight="45.0" prefWidth="147.0" text="DELETE" textFill="#f20404">
+                <Button fx:id="btnDeleteRec" mnemonicParsing="false" onAction="#actionButtonPressedModal" prefHeight="45.0" prefWidth="147.0" text="DELETE" textFill="#f20404">
                     <VBox.margin>
                         <Insets left="420.0" top="20.0" />
                     </VBox.margin>
