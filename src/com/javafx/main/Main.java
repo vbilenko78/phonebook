@@ -5,7 +5,6 @@ import com.javafx.objects.Lang;
 import com.javafx.utils.LocaleManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,23 +17,16 @@ import java.util.ResourceBundle;
 
 public class Main extends Application implements Observer {
 
-
     private static final String FXML_MAIN = "../fxml/main.fxml";
     private static final String BUNDLES_FOLDER = "com.javafx.bundles.Locale";
 
     private Stage primaryStage;
-
-    private Parent fxmlMain;
-
-    private MainController mainController;
-    private FXMLLoader fxmlLoader;
-
     private VBox currentRoot;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        createGUI(LocaleManager.RU_LOCALE);
+        createGUI(LocaleManager.EN_LOCALE);
     }
 
 
@@ -52,7 +44,7 @@ public class Main extends Application implements Observer {
 
     // загружает дерево компонентов и возвращает в виде VBox (корневой элемент в FXML)
     private VBox loadFXML(Locale locale) {
-        fxmlLoader = new FXMLLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
 
         fxmlLoader.setLocation(getClass().getResource(FXML_MAIN));
         fxmlLoader.setResources(ResourceBundle.getBundle(BUNDLES_FOLDER, locale));
@@ -60,9 +52,9 @@ public class Main extends Application implements Observer {
         VBox node = null;
 
         try {
-            node = (VBox) fxmlLoader.load();
+            node = fxmlLoader.load();
 
-            mainController = fxmlLoader.getController();
+            MainController mainController = fxmlLoader.getController();
             mainController.addObserver(this);
             primaryStage.setTitle(fxmlLoader.getResources().getString("address_book"));
 

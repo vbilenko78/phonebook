@@ -116,14 +116,14 @@ public class MainController extends Observable implements Initializable {
     }
 
     private void fillLangComboBox() {
-        Lang langRU = new Lang(0, RU_CODE, resourceBundle.getString("ru"), LocaleManager.RU_LOCALE);
-        Lang langEN = new Lang(1, EN_CODE, resourceBundle.getString("en"), LocaleManager.EN_LOCALE);
+        Lang langEN = new Lang(0, EN_CODE, resourceBundle.getString("en"), LocaleManager.EN_LOCALE);
+        Lang langRU = new Lang(1, RU_CODE, resourceBundle.getString("ru"), LocaleManager.RU_LOCALE);
 
-        comboLocales.getItems().add(langRU);
         comboLocales.getItems().add(langEN);
+        comboLocales.getItems().add(langRU);
 
         if (LocaleManager.getCurrentLang() == null) {
-            LocaleManager.setCurrentLang(langRU);
+            LocaleManager.setCurrentLang(langEN);
             comboLocales.getSelectionModel().select(0);
         } else {
             comboLocales.getSelectionModel().select(LocaleManager.getCurrentLang().getIndex());

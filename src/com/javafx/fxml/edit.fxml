@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -8,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controllers.EditDialogController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controllers.EditDialogController">
     <left>
         <VBox prefHeight="205.0" prefWidth="122.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnSave" defaultButton="true" minWidth="150.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="45.0" prefWidth="95.0" text="%save_btn_dialog">
+                <Button fx:id="btnSave" defaultButton="true" minWidth="150.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="52.0" prefWidth="150.0" text="%save_btn_dialog">
                     <VBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
                     </VBox.margin>
@@ -20,7 +26,7 @@
                   <Font size="12.0" />
                </font>
                 </Button>
-                <Button fx:id="btnCancel" cancelButton="true" minWidth="150.0" mnemonicParsing="false" onAction="#actionClose" prefHeight="27.0" prefWidth="86.0" text="%cancel_btn_dialog">
+                <Button fx:id="btnCancel" cancelButton="true" minWidth="150.0" mnemonicParsing="false" onAction="#actionClose" prefHeight="52.0" prefWidth="150.0" text="%cancel_btn_dialog">
                     <VBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
@@ -52,7 +58,7 @@
     <bottom>
         <VBox prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnDeleteRec" mnemonicParsing="false" onAction="#actionButtonPressedModal" prefHeight="45.0" prefWidth="147.0" text="DELETE" textFill="#f20404">
+                <Button fx:id="btnDeleteRec" mnemonicParsing="false" onAction="#actionButtonPressedModal" prefHeight="52.0" prefWidth="147.0" text="DELETE" textFill="#f20404">
                     <VBox.margin>
                         <Insets left="420.0" top="20.0" />
                     </VBox.margin>
