@@ -144,6 +144,7 @@ public class MainController extends Observable implements Initializable {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
                     editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
+                    editDialogController.setEditMode(true);
                     showDialog();
                 }
             }
@@ -197,6 +198,7 @@ public class MainController extends Observable implements Initializable {
         switch (clickedButton.getId()) {
             case "btnNewRecord":
                 editDialogController.setPerson(new Person());
+                editDialogController.setEditMode(false);
                 showDialog();
 
                 if (editDialogController.isSaveClicked()) {
@@ -210,12 +212,15 @@ public class MainController extends Observable implements Initializable {
                     return;
                 }
                 editDialogController.setPerson(selectedPerson);
+                editDialogController.setEditMode(true);
                 showDialog();
 
                 if (editDialogController.isSaveClicked()) {
                     // коллекция в addressBookImpl и так обновляется, т.к. мы ее редактируем в диалоговом окне и сохраняем при нажатии на ОК
                     research = true;
                     addressBookImpl.update(selectedPerson);
+                }else if (editDialogController.isDeleteClicked()){
+                    delete(selectedPerson);
                 }
                 break;
 
@@ -224,8 +229,7 @@ public class MainController extends Observable implements Initializable {
                     return;
                 }
 
-                research = true;
-                addressBookImpl.delete(selectedPerson);
+                research = delete(selectedPerson);
                 break;
         }
 
@@ -234,6 +238,10 @@ public class MainController extends Observable implements Initializable {
             actionSearch(actionEvent);
         }
 
+    }
+
+    private boolean delete(Person selectedPerson) {
+        return addressBookImpl.delete(selectedPerson);
     }
 
     private boolean confirmDelete() {

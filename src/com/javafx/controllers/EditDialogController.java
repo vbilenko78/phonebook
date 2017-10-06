@@ -44,10 +44,25 @@ public class EditDialogController implements Initializable {
     private TextField txtEmail;
 
     private Person person;
+    private boolean editMode;
     private ResourceBundle resourceBundle;
     private boolean saveClicked = false;
+    private boolean deleteClicked = false;
     private FXMLLoader fxmlLoader = new FXMLLoader();
 
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+
+        if (editMode){
+            btnDeleteRec.setVisible(true);
+        }else{
+            btnDeleteRec.setVisible(false);
+        }
+    }
 
     void setPerson(Person person) {
         if (person == null) {
@@ -70,6 +85,11 @@ public class EditDialogController implements Initializable {
         stage.hide();
     }
 
+    public void actionDelete(ActionEvent actionEvent){
+        deleteClicked = true;
+        actionClose(actionEvent);
+    }
+
 
     public void actionSave(ActionEvent actionEvent) {
         if (!checkValues()) {
@@ -81,6 +101,8 @@ public class EditDialogController implements Initializable {
         saveClicked = true;
         actionClose(actionEvent);
     }
+
+
 
     private boolean checkValues() {
         if (txtName.getText().trim().length() == 0 || txtPhone.getText().trim().length() == 0 || txtEmail.getText().trim().length() == 0) {
@@ -95,11 +117,19 @@ public class EditDialogController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.resourceBundle = resources;
         fxmlLoader.setLocation(getClass().getResource(FXML_MAIN));
+
+
     }
 
     public boolean isSaveClicked() {
         return saveClicked;
     }
+
+
+    public boolean isDeleteClicked(){
+        return deleteClicked;
+    }
+
 
     //delete record from the modal window
     public void actionButtonPressedModal(ActionEvent actionEvent) {

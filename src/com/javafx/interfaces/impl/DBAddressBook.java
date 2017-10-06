@@ -21,7 +21,7 @@ public class DBAddressBook implements AddressBook {
 
     @Override
     public boolean add(Person person) {
-        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("insert into person(name, phone, email) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("INSERT INTO person(name, phone, email) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, person.getName());
             statement.setString(2, person.getPhone());
             statement.setString(3, person.getEmail());
@@ -64,7 +64,7 @@ public class DBAddressBook implements AddressBook {
 
         try (Connection con = SQLiteConnection.getConnection();
              Statement statement = con.createStatement();
-             ResultSet rs = statement.executeQuery("select * from person");) {
+             ResultSet rs = statement.executeQuery("SELECT * FROM person");) {
             while (rs.next()) {
                 Person person = new Person();
                 person.setId(rs.getInt("id"));
@@ -82,7 +82,7 @@ public class DBAddressBook implements AddressBook {
 
     @Override
     public boolean update(Person person) {
-        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("update person set name=?, phone=?, email=? where id=?")) {
+        try (Connection con = SQLiteConnection.getConnection(); PreparedStatement statement = con.prepareStatement("UPDATE person SET name=?, phone=?, email=? WHERE id=?")) {
             statement.setString(1, person.getName());
             statement.setString(2, person.getPhone());
             statement.setString(3, person.getEmail());
@@ -106,7 +106,7 @@ public class DBAddressBook implements AddressBook {
         personList.clear();
 
         try (Connection con = SQLiteConnection.getConnection();
-             PreparedStatement statement = con.prepareStatement("select * from person where name like ? or phone like ? or email like ?")) {
+             PreparedStatement statement = con.prepareStatement("SELECT * FROM person WHERE name LIKE ? OR phone LIKE ? OR email LIKE ?")) {
 
             String searchStr = "%" + text + "%";
 

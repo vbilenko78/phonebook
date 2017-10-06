@@ -58,7 +58,7 @@
     <bottom>
         <VBox prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnDeleteRec" mnemonicParsing="false" onAction="#actionButtonPressedModal" prefHeight="52.0" prefWidth="147.0" text="DELETE" textFill="#f20404">
+                <Button fx:id="btnDeleteRec" mnemonicParsing="false" onAction="#actionDelete" prefHeight="52.0" prefWidth="147.0" text="DELETE" textFill="#f20404">
                     <VBox.margin>
                         <Insets left="420.0" top="20.0" />
                     </VBox.margin>

@@ -2,7 +2,9 @@ package com.javafx.main;
 
 import com.javafx.controllers.MainController;
 import com.javafx.objects.Lang;
+import com.javafx.preloader.TestPreloader;
 import com.javafx.utils.LocaleManager;
+import com.sun.javafx.application.LauncherImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,7 +33,7 @@ public class Main extends Application implements Observer {
 
 
     public static void main(String[] args) {
-        launch(args);
+        LauncherImpl.launchApplication(Main.class, TestPreloader.class, args);
     }
 
     @Override
